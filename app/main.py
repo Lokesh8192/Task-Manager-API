@@ -16,6 +16,7 @@ from app.core.exception_handler import (
 
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 
 Base.metadata.create_all(bind=engine)
@@ -23,6 +24,14 @@ Base.metadata.create_all(bind=engine)
 setup_logging()
 
 app = FastAPI(title="Task Manager API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or frontend URL later
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_middleware(LoggingMiddleware)
 
